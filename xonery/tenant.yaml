@@ -1,0 +1,24 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: xonery-tenant
+  namespace: flux-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: ./templates/tenant
+      sourceRef:
+        kind: GitRepository
+        name: charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    tenant:
+      name: xonery
+      namespace: xonery-namespace
+      repository:
+        url: https://github.com/kilianops/apps.git
+        path: ./xonery
+        branch: main
